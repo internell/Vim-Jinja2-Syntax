@@ -10,17 +10,17 @@
 "
 " Changes:
 "
-"     2008 May 9:     Added support for Jinja2 changes (new keyword rules)
+"     2008 May 9:     Added support for Jinja 2 changes (new keyword rules)
 
 " .vimrc variable to disable html highlighting
 if !exists('g:jinja_syntax_html')
-   let g:jinja_syntax_html=1
+  let g:jinja_syntax_html=1
 endif
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
 if !exists("main_syntax")
-  if version < 600
+  if v:version < 600
     syntax clear
   elseif exists("b:current_syntax")
     finish
@@ -30,7 +30,7 @@ endif
 
 " Pull in the HTML syntax.
 if g:jinja_syntax_html
-  if version < 600
+  if v:version < 600
     so <sfile>:p:h/html.vim
   else
     let ext = expand('%:e')
@@ -79,7 +79,7 @@ syn match jinjaAttribute contained /[a-zA-Z_][a-zA-Z0-9_]*/
 syn region jinjaNested matchgroup=jinjaOperator start="(" end=")" transparent display containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained
 syn region jinjaNested matchgroup=jinjaOperator start="\[" end="\]" transparent display containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained
 " syn region jinjaNested matchgroup=jinjaOperator start="{" end="}" transparent display containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained
-syn region jinjaTagBlock matchgroup=jinjaTagDelim start=/\[%-\?/ end=/-\?%\]/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment
+syn region jinjaTagBlock matchgroup=jinjaTagDelim start=/\[%[-+]\?/ end=/[-+]\?%\]/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment
 
 syn region jinjaVarBlock matchgroup=jinjaVarDelim start=/\[\[-\?/ end=/-\?\]\]/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment
 
@@ -92,7 +92,7 @@ syn region jinjaComment matchgroup=jinjaCommentDelim start="\[#" end="#\]" conta
 " Block start keywords.  A bit tricker.  We only highlight at the start of a
 " tag block and only if the name is not followed by a comma or equals sign
 " which usually means that we have to deal with an assignment.
-syn match jinjaStatement containedin=jinjaTagBlock contained /\(\[%-\?\s*\)\@<=\<[a-zA-Z_][a-zA-Z0-9_]*\>\(\s*[,=]\)\@!/
+syn match jinjaStatement containedin=jinjaTagBlock contained /\(\[%[-+]\?\s*\)\@<=\<[a-zA-Z_][a-zA-Z0-9_]*\>\(\s*[,=]\)\@!/
 
 " and context modifiers
 syn match jinjaStatement containedin=jinjaTagBlock contained /\<with\(out\)\?\s\+context\>/
@@ -101,8 +101,8 @@ syn match jinjaStatement containedin=jinjaTagBlock contained /\<with\(out\)\?\s\
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
 " For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_jinja_syn_inits")
-  if version < 508
+if v:version >= 508 || !exists("did_jinja_syn_inits")
+  if v:version < 508
     let did_jinja_syn_inits = 1
     command -nargs=+ HiLink hi link <args>
   else
@@ -136,6 +136,6 @@ endif
 
 let b:current_syntax = "jinja"
 
-if main_syntax == 'jinja'
+if main_syntax ==# 'jinja'
   unlet main_syntax
 endif
