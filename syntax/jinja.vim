@@ -13,8 +13,8 @@
 "     2008 May 9:     Added support for Jinja 2 changes (new keyword rules)
 
 " .vimrc variable to disable html highlighting
-if !exists('g:jinja_syntax_html')
-  let g:jinja_syntax_html=1
+if !exists('g:jinjaalt_syntax_html')
+  let g:jinjaalt_syntax_html=1
 endif
 
 " For version 5.x: Clear all syntax items
@@ -25,11 +25,11 @@ if !exists("main_syntax")
   elseif exists("b:current_syntax")
     finish
   endif
-  let main_syntax = 'jinja'
+  let main_syntax = 'jinjaalt'
 endif
 
 " Pull in the HTML syntax.
-if g:jinja_syntax_html
+if g:jinjaalt_syntax_html
   if v:version < 600
     so <sfile>:p:h/html.vim
   else
@@ -48,94 +48,94 @@ syntax case match
 
 " Jinja template built-in tags and parameters (without filter, macro, is and raw, they
 " have special threatment)
-syn keyword jinjaStatement containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained and if else in not or recursive as import
+syn keyword jinjaAltStatement containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained and if else in not or recursive as import
 
-syn keyword jinjaStatement containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained is filter skipwhite nextgroup=jinjaFilter
-syn keyword jinjaStatement containedin=jinjaTagBlock contained macro skipwhite nextgroup=jinjaFunction
-syn keyword jinjaStatement containedin=jinjaTagBlock contained block skipwhite nextgroup=jinjaBlockName
+syn keyword jinjaAltStatement containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained is filter skipwhite nextgroup=jinjaAltFilter
+syn keyword jinjaAltStatement containedin=jinjaAltTagBlock contained macro skipwhite nextgroup=jinjaAltFunction
+syn keyword jinjaAltStatement containedin=jinjaAltTagBlock contained block skipwhite nextgroup=jinjaAltBlockName
 
 " Variable Names
-syn match jinjaVariable containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained /[a-zA-Z_][a-zA-Z0-9_]*/
-syn keyword jinjaSpecial containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained false true none False True None loop super caller varargs kwargs
+syn match jinjaAltVariable containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained /[a-zA-Z_][a-zA-Z0-9_]*/
+syn keyword jinjaAltSpecial containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained false true none False True None loop super caller varargs kwargs
 
 " Filters
-syn match jinjaOperator "|" containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained skipwhite nextgroup=jinjaFilter
-syn match jinjaFilter contained /[a-zA-Z_][a-zA-Z0-9_]*/
-syn match jinjaFunction contained /[a-zA-Z_][a-zA-Z0-9_]*/
-syn match jinjaBlockName contained /[a-zA-Z_][a-zA-Z0-9_]*/
+syn match jinjaAltOperator "|" containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained skipwhite nextgroup=jinjaAltFilter
+syn match jinjaAltFilter contained /[a-zA-Z_][a-zA-Z0-9_]*/
+syn match jinjaAltFunction contained /[a-zA-Z_][a-zA-Z0-9_]*/
+syn match jinjaAltBlockName contained /[a-zA-Z_][a-zA-Z0-9_]*/
 
 " Jinja template constants
-syn region jinjaString containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained start=/"/ skip=/\(\\\)\@<!\(\(\\\\\)\@>\)*\\"/ end=/"/
-syn region jinjaString containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained start=/'/ skip=/\(\\\)\@<!\(\(\\\\\)\@>\)*\\'/ end=/'/
-syn match jinjaNumber containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained /[0-9]\+\(\.[0-9]\+\)\?/
+syn region jinjaAltString containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained start=/"/ skip=/\(\\\)\@<!\(\(\\\\\)\@>\)*\\"/ end=/"/
+syn region jinjaAltString containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained start=/'/ skip=/\(\\\)\@<!\(\(\\\\\)\@>\)*\\'/ end=/'/
+syn match jinjaAltNumber containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained /[0-9]\+\(\.[0-9]\+\)\?/
 
 " Operators
-syn match jinjaOperator containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained /[+\-*\/<>=!,:]/
-syn match jinjaPunctuation containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained /[()\[\]]/
-syn match jinjaOperator containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained /\./ nextgroup=jinjaAttribute
-syn match jinjaAttribute contained /[a-zA-Z_][a-zA-Z0-9_]*/
+syn match jinjaAltOperator containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained /[+\-*\/<>=!,:]/
+syn match jinjaAltPunctuation containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained /[()\[\]]/
+syn match jinjaAltOperator containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained /\./ nextgroup=jinjaAltAttribute
+syn match jinjaAltAttribute contained /[a-zA-Z_][a-zA-Z0-9_]*/
 
 " Jinja template tag and variable blocks
-syn region jinjaNested matchgroup=jinjaOperator start="(" end=")" transparent display containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained
-syn region jinjaNested matchgroup=jinjaOperator start="\[" end="\]" transparent display containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained
-" syn region jinjaNested matchgroup=jinjaOperator start="{" end="}" transparent display containedin=jinjaVarBlock,jinjaTagBlock,jinjaNested contained
-syn region jinjaTagBlock matchgroup=jinjaTagDelim start=/\[%[-+]\?/ end=/[-+]\?%\]/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment
+syn region jinjaAltNested matchgroup=jinjaAltOperator start="(" end=")" transparent display containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained
+syn region jinjaAltNested matchgroup=jinjaAltOperator start="\[" end="\]" transparent display containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained
+" syn region jinjaAltNested matchgroup=jinjaAltOperator start="{" end="}" transparent display containedin=jinjaAltVarBlock,jinjaAltTagBlock,jinjaAltNested contained
+syn region jinjaAltTagBlock matchgroup=jinjaAltTagDelim start=/\[%[-+]\?/ end=/[-+]\?%\]/ containedin=ALLBUT,jinjaAltTagBlock,jinjaAltVarBlock,jinjaAltRaw,jinjaAltString,jinjaAltNested,jinjaAltComment
 
-syn region jinjaVarBlock matchgroup=jinjaVarDelim start=/\[\[-\?/ end=/-\?\]\]/ containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaRaw,jinjaString,jinjaNested,jinjaComment
+syn region jinjaAltVarBlock matchgroup=jinjaAltVarDelim start=/\[\[-\?/ end=/-\?\]\]/ containedin=ALLBUT,jinjaAltTagBlock,jinjaAltVarBlock,jinjaAltRaw,jinjaAltString,jinjaAltNested,jinjaAltComment
 
 " Jinja template 'raw' tag
-syn region jinjaRaw matchgroup=jinjaRawDelim start="\[%\s*raw\s*%\]" end="\[%\s*endraw\s*%\]" containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaString,jinjaComment
+syn region jinjaAltRaw matchgroup=jinjaAltRawDelim start="\[%\s*raw\s*%\]" end="\[%\s*endraw\s*%\]" containedin=ALLBUT,jinjaAltTagBlock,jinjaAltVarBlock,jinjaAltString,jinjaAltComment
 
 " Jinja comments
-syn region jinjaComment matchgroup=jinjaCommentDelim start="\[#" end="#\]" containedin=ALLBUT,jinjaTagBlock,jinjaVarBlock,jinjaString,jinjaComment
+syn region jinjaAltComment matchgroup=jinjaAltCommentDelim start="\[#" end="#\]" containedin=ALLBUT,jinjaAltTagBlock,jinjaAltVarBlock,jinjaAltString,jinjaAltComment
 
 " Block start keywords.  A bit tricker.  We only highlight at the start of a
 " tag block and only if the name is not followed by a comma or equals sign
 " which usually means that we have to deal with an assignment.
-syn match jinjaStatement containedin=jinjaTagBlock contained /\(\[%[-+]\?\s*\)\@<=\<[a-zA-Z_][a-zA-Z0-9_]*\>\(\s*[,=]\)\@!/
+syn match jinjaAltStatement containedin=jinjaAltTagBlock contained /\(\[%[-+]\?\s*\)\@<=\<[a-zA-Z_][a-zA-Z0-9_]*\>\(\s*[,=]\)\@!/
 
 " and context modifiers
-syn match jinjaStatement containedin=jinjaTagBlock contained /\<with\(out\)\?\s\+context\>/
+syn match jinjaAltStatement containedin=jinjaAltTagBlock contained /\<with\(out\)\?\s\+context\>/
 
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
 " For version 5.8 and later: only when an item doesn't have highlighting yet
-if v:version >= 508 || !exists("did_jinja_syn_inits")
+if v:version >= 508 || !exists("did_jinjaalt_syn_inits")
   if v:version < 508
-    let did_jinja_syn_inits = 1
+    let did_jinjaalt_syn_inits = 1
     command -nargs=+ HiLink hi link <args>
   else
     command -nargs=+ HiLink hi def link <args>
   endif
 
-  HiLink jinjaPunctuation jinjaOperator
-  HiLink jinjaAttribute jinjaVariable
-  HiLink jinjaFunction jinjaFilter
+  HiLink jinjaAltPunctuation jinjaAltOperator
+  HiLink jinjaAltAttribute jinjaAltVariable
+  HiLink jinjaAltFunction jinjaAltFilter
 
-  HiLink jinjaTagDelim jinjaTagBlock
-  HiLink jinjaVarDelim jinjaVarBlock
-  HiLink jinjaCommentDelim jinjaComment
-  HiLink jinjaRawDelim jinja
+  HiLink jinjaAltTagDelim jinjaAltTagBlock
+  HiLink jinjaAltVarDelim jinjaAltVarBlock
+  HiLink jinjaAltCommentDelim jinjaAltComment
+  HiLink jinjaAltRawDelim jinjaAlt
 
-  HiLink jinjaSpecial Special
-  HiLink jinjaOperator Normal
-  HiLink jinjaRaw Normal
-  HiLink jinjaTagBlock PreProc
-  HiLink jinjaVarBlock PreProc
-  HiLink jinjaStatement Statement
-  HiLink jinjaFilter Function
-  HiLink jinjaBlockName Function
-  HiLink jinjaVariable Identifier
-  HiLink jinjaString Constant
-  HiLink jinjaNumber Constant
-  HiLink jinjaComment Comment
+  HiLink jinjaAltSpecial Special
+  HiLink jinjaAltOperator Normal
+  HiLink jinjaAltRaw Normal
+  HiLink jinjaAltTagBlock PreProc
+  HiLink jinjaAltVarBlock PreProc
+  HiLink jinjaAltStatement Statement
+  HiLink jinjaAltFilter Function
+  HiLink jinjaAltBlockName Function
+  HiLink jinjaAltVariable Identifier
+  HiLink jinjaAltString Constant
+  HiLink jinjaAltNumber Constant
+  HiLink jinjaAltComment Comment
 
   delcommand HiLink
 endif
 
-let b:current_syntax = "jinja"
+let b:current_syntax = "jinjaalt"
 
-if main_syntax ==# 'jinja'
+if main_syntax ==# 'jinjaalt'
   unlet main_syntax
 endif
