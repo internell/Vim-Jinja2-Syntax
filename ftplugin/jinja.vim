@@ -7,7 +7,7 @@ endif
 " TODO: useful?
 " runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
 
-setlocal comments=s:{#,ex:#} commentstring={#%s#}
+setlocal comments=s:\[#,ex:#\] commentstring=\[#%s#\]
 setlocal formatoptions+=tcqln
 
 if exists('b:undo_ftplugin')
@@ -28,7 +28,7 @@ if exists('loaded_matchit')
         \ '<\@<=[ou]l\>[^>]*\%(>\|$\):<\@<=li\>:<\@<=/[ou]l>,' .
         \ '<\@<=dl\>[^>]*\%(>\|$\):<\@<=d[td]\>:<\@<=/dl>,' .
         \ '<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>,' .
-        \ '{%[-+]\? *\%(end\)\@!\(\w\+\)\>.\{-}%}:{%-\? *end\1\>.\{-}%}'
+        \ '\[%[-+]\? *\%(end\)\@!\(\w\+\)\>.\{-}%\]:\[%-\? *end\1\>.\{-}%\]'
 endif
 
 " vim:set sw=2:
